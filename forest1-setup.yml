@@ -1,0 +1,18 @@
+# forest1-setup.yml
+- hosts: all
+  tasks:
+    - name: Install Active Directory Domain Services role
+      win_feature:
+        name: AD-Domain-Services
+        state: present
+
+    - name: Promote server to domain controller
+      win_domain_controller:
+        domain_name: sevenkingdoms.local
+        domain_safe_mode_password: Passw0rd!
+        database_path: C:\Windows\NTDS
+        log_path: C:\Windows\NTDS
+        sysvol_path: C:\Windows\SYSVOL
+        dns_install: yes
+        domain_type: forest
+        restart: yes
